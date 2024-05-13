@@ -4,11 +4,13 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { CourseItem } from '../models/course';
+import { AllCoursesService } from '../services/all-courses.service';
 
 //interface importerat
 
-// TODO: replace this with real data from your application
 const COURSE_DATA: CourseItem[] = [];
+
+
 
 /**
  * Data source for the CourseTable view. This class should
@@ -73,8 +75,11 @@ export class CourseTableDataSource extends DataSource<CourseItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'code': return compare(+a.courseCode, +b.courseCode, isAsc);
+        case 'name': return compare(+a.courseName, +b.courseName, isAsc);
+        case 'points': return compare(+a.points, +b.points, isAsc);
+        case 'subject': return compare(+a.subject, +b.subject, isAsc);
+
         default: return 0;
       }
     });

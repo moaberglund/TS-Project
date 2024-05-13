@@ -2,7 +2,8 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
-import { CourseTableDataSource, CourseTableItem } from './course-table-datasource';
+import { CourseTableDataSource } from './course-table-datasource';
+import { CourseItem } from '../models/course';
 
 @Component({
   selector: 'app-course-table',
@@ -14,12 +15,12 @@ import { CourseTableDataSource, CourseTableItem } from './course-table-datasourc
 export class CourseTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<CourseTableItem>;
-  
+  @ViewChild(MatTable) table!: MatTable<CourseItem>;
+
   dataSource = new CourseTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus"];
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
