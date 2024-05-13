@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Course } from '../models/course';
+import { CourseItem } from '../models/course';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class AllCoursesService {
   constructor(private http: HttpClient) { }
 
   //metod för att hämta kurserna
-  getCourses(): Observable<Course[]>{
-    return this.http.get<Course[]>(this.url);
+  getCourses(): Observable<CourseItem[]>{
+    return this.http.get<CourseItem[]>(this.url);
   }
 }
