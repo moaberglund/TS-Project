@@ -1,15 +1,10 @@
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { map } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { CourseItem } from '../models/course';
 import { AllCoursesService } from '../services/all-courses.service';
-
-//interface importerat
-
-const COURSE_DATA: CourseItem[] = [];
-
 
 
 /**
@@ -18,11 +13,12 @@ const COURSE_DATA: CourseItem[] = [];
  * (including sorting, pagination, and filtering).
  */
 export class CourseTableDataSource extends DataSource<CourseItem> {
-  data: CourseItem[] = COURSE_DATA;
+  data: CourseItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
+  isLoading: boolean = false;
 
-  constructor() {
+  constructor(private allCoursesService: AllCoursesService) {  // Inject the service
     super();
   }
 
@@ -35,10 +31,13 @@ export class CourseTableDataSource extends DataSource<CourseItem> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
-      return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
+      return merge(this.paginator.page, this.sort.sortChange)
         .pipe(map(() => {
           return this.getPagedData(this.getSortedData([...this.data]));
-        }));
+        }),
+        catchError(() => observableOf([])), // Handle errors
+        finalize(() => this.isLoading = false) // Finalize request
+      );
     } else {
       throw Error('Please set the paginator and sort on the data source before connecting.');
     }
@@ -57,7 +56,7 @@ export class CourseTableDataSource extends DataSource<CourseItem> {
   private getPagedData(data: CourseItem[]): CourseItem[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-      return data.splice(startIndex, this.paginator.pageSize);
+      return data.splice(startIndex, startIndex + this.paginator.pageSize);
     } else {
       return data;
     }
@@ -84,7 +83,35 @@ export class CourseTableDataSource extends DataSource<CourseItem> {
       }
     });
   }
+
+
+/**
+   * Load data from API using the service
+   */
+loadData() {
+  this.isLoading = true; // Set loading flag
+  this.allCoursesService.getCourses()
+    .subscribe(
+      (data: CourseItem[]) => {
+        this.data = data;
+        if (this.paginator) {
+          this.paginator.length = this.data.length;
+        }
+        this.connect(); // Reconnect to trigger update
+      },
+      error => {
+        console.error('Error fetching data from API: ', error);
+        // Handle error as needed
+        this.isLoading = false; // Reset loading flag
+      }
+    );
 }
+}
+
+
+
+
+
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
