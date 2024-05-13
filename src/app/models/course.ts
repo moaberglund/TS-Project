@@ -1,4 +1,4 @@
-export interface Course {
+export interface CourseItem {
     courseCode: String,
     subjectCode: String,
     level: String,
