@@ -1,0 +1,47 @@
+$transparent-bg: rgb(63, 103, 133, 0.8);
+$shy-indigo: rgb(63, 103, 133);
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1em;
+    background-color: $transparent-bg;
+  
+
+    nav {
+        margin: 0.2em 0 0.2em 0;
+        border-radius: 20px;
+
+        ul {
+            text-align: right;
+        }
+
+        li {
+            display: inline;
+            padding: 1em;
+        }
+
+        a {
+            color: rgb(255, 255, 255);
+            font-weight: 400;
+            font-size: 20px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding-right: 0.5em;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .active {
+            background-color: white;
+            text-shadow: 4px 4px 6px rgba(228, 228, 228, 0.5);
+            color: $shy-indigo;
+            padding: 2em 0.5em 2em 0.5em;
+        }
+
+    }
+}
