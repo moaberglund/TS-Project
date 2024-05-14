@@ -23,13 +23,27 @@ export class CourseTableComponent implements AfterViewInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus"];
 
-  constructor(private allCoursesService: AllCoursesService) {} // Inject AllCoursesService
+  constructor(private allCoursesService: AllCoursesService) { } // Inject AllCoursesService
 
   ngAfterViewInit(): void {
     this.dataSource = new CourseTableDataSource(this.allCoursesService); // Pass AllCoursesService to the constructor
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
-    this.dataSource.loadData(); // Load data after view initialization
+    this.loadData(); // Load data after view initialization
+  }
+
+  private loadData(): void {
+    this.allCoursesService.getCourses().subscribe(
+      (data: CourseItem[]) => {
+      this.dataSource.data = data;
+      if (this.paginator) {
+        this.paginator.length = data.length;
+      }
+    },
+  error => {
+    console.error("Error fetching data from API", error);
+  });
+
   }
 }

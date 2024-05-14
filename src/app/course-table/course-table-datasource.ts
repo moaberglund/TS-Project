@@ -84,28 +84,6 @@ export class CourseTableDataSource extends DataSource<CourseItem> {
     });
   }
 
-
-/**
-   * Load data from API using the service
-   */
-loadData() {
-  this.isLoading = true; // Set loading flag
-  this.allCoursesService.getCourses()
-    .subscribe(
-      (data: CourseItem[]) => {
-        this.data = data;
-        if (this.paginator) {
-          this.paginator.length = this.data.length;
-        }
-        this.connect(); // Reconnect to trigger update
-      },
-      error => {
-        console.error('Error fetching data from API: ', error);
-        // Handle error as needed
-        this.isLoading = false; // Reset loading flag
-      }
-    );
-}
 }
 
 

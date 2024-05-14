@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CoursesComponent } from './courses/courses.component';
 import { FrameworkComponent } from './framework/framework.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { CourseTableComponent } from './course-table/course-table.component';
