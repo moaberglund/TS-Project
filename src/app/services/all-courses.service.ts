@@ -18,3 +18,5 @@ export class AllCoursesService {
     return this.http.get<CourseItem[]>(this.url);
   }
 }
+
+
