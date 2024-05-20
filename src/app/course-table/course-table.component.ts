@@ -6,6 +6,8 @@ import { CourseItem } from '../models/course';
 import { AllCoursesService } from '../services/all-courses.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -13,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
   templateUrl: './course-table.component.html',
   styleUrl: './course-table.component.scss',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule]
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, MatSelectModule]
 })
 export class CourseTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -24,6 +26,9 @@ export class CourseTableComponent implements AfterViewInit {
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus"];
+  subjects: string[] = []; // Lista över ämnen
+  selectedSubject: string = ''; // Lägg till selectedSubject
+
 
   constructor(private allCoursesService: AllCoursesService) { } // Inject AllCoursesService
 
@@ -37,6 +42,7 @@ export class CourseTableComponent implements AfterViewInit {
     this.allCoursesService.getCourses().subscribe(
       (data: CourseItem[]) => {
         this.dataSource.data = data;
+        this.subjects = this.getUniqueSubjects(data); // Hämta unika ämnen
         if (this.paginator) {
           this.paginator.length = data.length;
         }
@@ -47,10 +53,30 @@ export class CourseTableComponent implements AfterViewInit {
 
   }
 
+  //sökning
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.paginator.firstPage(); // Återställ pagineringen till första sidan
   }
 
+  //välja ett ämne
+  private getUniqueSubjects(data: CourseItem[]): string[] {
+    const subjectsSet = new Set<string>();
+    data.forEach(course => subjectsSet.add(course.subject.toString()));
+    return Array.from(subjectsSet);
+  }
+
+  applySubjectFilter() {
+    if (!this.selectedSubject) {
+      this.dataSource.filter = ''; // Om ingen ämne är valt, visa alla kurser
+      return;
+    }
+  
+    this.dataSource.filterPredicate = (data: CourseItem, filter: string) => {
+      return data.subject.toLowerCase() === filter;
+    };
+    this.dataSource.filter = this.selectedSubject.trim().toLowerCase();
+  }
+  
 }
