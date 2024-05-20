@@ -8,14 +8,20 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-
-
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-course-table',
   templateUrl: './course-table.component.html',
   styleUrl: './course-table.component.scss',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, MatFormFieldModule, MatInputModule, MatSelectModule]
+  imports: [CommonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule]
 })
 export class CourseTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -25,7 +31,7 @@ export class CourseTableComponent implements AfterViewInit {
   dataSource: MatTableDataSource<CourseItem> = new MatTableDataSource<CourseItem>;  // Declare dataSource without initialization
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus"];
+  displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus", "add"];
   subjects: string[] = []; // Lista över ämnen
   selectedSubject: string = ''; // Lägg till selectedSubject
 
@@ -72,11 +78,17 @@ export class CourseTableComponent implements AfterViewInit {
       this.dataSource.filter = ''; // Om ingen ämne är valt, visa alla kurser
       return;
     }
-  
+
     this.dataSource.filterPredicate = (data: CourseItem, filter: string) => {
       return data.subject.toLowerCase() === filter;
     };
     this.dataSource.filter = this.selectedSubject.trim().toLowerCase();
   }
-  
+
+  onAdd(row: CourseItem) {
+    console.log('Add button clicked for:', row);
+    // Implementera localstorage
+  }
+
+
 }
