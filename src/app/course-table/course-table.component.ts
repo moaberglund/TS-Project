@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTableModule, MatTable } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { CourseTableDataSource } from './course-table-datasource';
 import { CourseItem } from '../models/course';
 import { AllCoursesService } from '../services/all-courses.service';
@@ -18,7 +19,7 @@ export class CourseTableComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<CourseItem>;
 
-  dataSource!: CourseTableDataSource;  // Declare dataSource without initialization
+  dataSource: MatTableDataSource<CourseItem> = new MatTableDataSource<CourseItem>;  // Declare dataSource without initialization
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus"];
@@ -26,10 +27,8 @@ export class CourseTableComponent implements AfterViewInit {
   constructor(private allCoursesService: AllCoursesService) { } // Inject AllCoursesService
 
   ngAfterViewInit(): void {
-    this.dataSource = new CourseTableDataSource(this.allCoursesService); // Pass AllCoursesService to the constructor
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    this.dataSource.sort = this.sort;
     this.loadData(); // Load data after view initialization
   }
 
