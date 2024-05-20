@@ -2,20 +2,21 @@
 
   <div class="mat-elevation-z8 course-table">
 
-    <!-- Ämne select -->
-    <mat-form-field>
-      <mat-label>Välj ämne</mat-label>
-      <mat-select [(value)]="selectedSubject" (selectionChange)="applySubjectFilter()">
-        <mat-option *ngFor="let subject of subjects" [value]="subject">{{subject}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="form-fields">
+      <!-- Sök kurser -->
+      <mat-form-field>
+        <mat-label>Sök</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="ex. introduktion" #input>
+      </mat-form-field>
 
-    <!-- Sök kurser -->
-    <mat-form-field>
-      <mat-label>Sök</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="ex. introduktion" #input>
-    </mat-form-field>
-
+      <!-- Ämne select -->
+      <mat-form-field>
+        <mat-label>Välj ämne</mat-label>
+        <mat-select [(value)]="selectedSubject" (selectionChange)="applySubjectFilter()">
+          <mat-option *ngFor="let subject of subjects" [value]="subject">{{subject}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <table mat-table class="full-width-table" [dataSource]="dataSource" matSort aria-label="Elements">
 
       <!-- Kurskod Column -->
