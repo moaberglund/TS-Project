@@ -34,7 +34,7 @@ export class CourseTableComponent implements AfterViewInit {
   displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus", "add"];
   subjects: string[] = []; // Lista över ämnen
   selectedSubject: string = ''; // Lägg till selectedSubject
-
+  filterValue: string = ''; // Lägg till filterValue
 
   constructor(private allCoursesService: AllCoursesService) { } // Inject AllCoursesService
 
@@ -61,9 +61,12 @@ export class CourseTableComponent implements AfterViewInit {
 
   //sökning
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.paginator.firstPage(); // Återställ pagineringen till första sidan
+    this.filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.updateFilter();
+  }
+
+  applySubjectFilter() {
+    this.updateFilter();
   }
 
   //välja ett ämne
@@ -73,18 +76,22 @@ export class CourseTableComponent implements AfterViewInit {
     return Array.from(subjectsSet);
   }
 
-  applySubjectFilter() {
-    if (!this.selectedSubject) {
-      this.dataSource.filter = ''; // Om ingen ämne är valt, visa alla kurser
-      return;
-    }
-
+  updateFilter() {
     this.dataSource.filterPredicate = (data: CourseItem, filter: string) => {
-      return data.subject.toLowerCase() === filter;
-    };
-    this.dataSource.filter = this.selectedSubject.trim().toLowerCase();
-  }
+      const searchTerm = this.filterValue.toLowerCase();
+      const subjectTerm = this.selectedSubject.toLowerCase();
 
+      const matchesFilter = data.courseName.toLowerCase().includes(searchTerm) ||
+        data.courseCode.toLowerCase().includes(searchTerm) ||
+        data.subject.toLowerCase().includes(searchTerm) ||
+        data.points.toString().includes(searchTerm);
+
+      const matchesSubject = !subjectTerm || data.subject.toLowerCase() === subjectTerm;
+
+      return matchesFilter && matchesSubject;
+    };
+    this.dataSource.filter = this.filterValue + this.selectedSubject; // Trigga omvärdering av filter
+  }
   onAdd(row: CourseItem) {
     console.log('Add button clicked for:', row);
     // Implementera localstorage
