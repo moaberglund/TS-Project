@@ -92,8 +92,10 @@ export class CourseTableComponent implements AfterViewInit {
     };
     this.dataSource.filter = this.filterValue + this.selectedSubject; // Trigga omvärdering av filter
   }
+
+
   onAdd(row: CourseItem) {
-    console.log('Add button clicked for:', row);
+  
     // Implementera localstorage
   }
 
