@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FrameworkService } from '../services/framework.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-course-table',
@@ -38,7 +39,9 @@ export class CourseTableComponent implements AfterViewInit {
   selectedSubject: string = ''; // Lägg till selectedSubject
   filterValue: string = ''; // Lägg till filterValue
 
-  constructor(private allCoursesService: AllCoursesService, private frameworkService: FrameworkService) { } // Inject AllCoursesService
+  constructor(private allCoursesService: AllCoursesService,
+    private frameworkService: FrameworkService,
+    private snackBar: MatSnackBar) { } // Inject AllCoursesService
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -98,15 +101,25 @@ export class CourseTableComponent implements AfterViewInit {
     this.dataSource.filter = this.filterValue + this.selectedSubject; // Trigga omvärdering av filter
   }
 
-//Lägga till kurs till localstorage
+  // funktion för snackbar (bar som ploppar upp längst ner)
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000, // Tiden för hur länge snackbar ska visas (ms)
+    });
+  }
+
+
+  //Lägga till kurs till localstorage
   onAdd(row: CourseItem) {
     this.frameworkService.addCourse(row);
+    this.openSnackBar('Kursen har lagts till', 'Stäng');
     console.log('Course added to local storage:', row);
 
   }
-//Ta bort kurs från 
+  //Ta bort kurs från 
   onRemove(row: CourseItem) {
     this.frameworkService.removeCourse(row);
+    this.openSnackBar('Kursen har tagits bort', 'Stäng');
     console.log('Course removed from local storage:', row);
   }
 

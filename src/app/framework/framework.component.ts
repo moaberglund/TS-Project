@@ -8,16 +8,17 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-framework',
   standalone: true,
-  imports: [MatTableModule, 
-    MatFormFieldModule, 
-    MatInputModule, 
-    MatSelectModule, 
-    MatIconModule, 
-    MatPaginatorModule, 
+  imports: [MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatPaginatorModule,
     MatSortModule],
   templateUrl: './framework.component.html',
   styleUrl: './framework.component.scss'
@@ -30,7 +31,10 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private frameworkService: FrameworkService) { }
+  constructor(
+    private frameworkService: FrameworkService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.loadSavedCourses();
@@ -45,10 +49,18 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
     const courses = this.frameworkService.getCourses();
     this.savedCourses.data = courses;
   }
+  
+  // funktion för snackbar (bar som ploppar upp längst ner)
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000, // Tiden för hur länge snackbar ska visas (ms)
+    });
+  }
 
   onRemove(course: CourseItem): void {
     this.frameworkService.removeCourse(course);
     this.loadSavedCourses(); // Uppdatera listan efter borttagning
+    this.openSnackBar('Kursen har tagits bort', 'Stäng');
   }
 
 }
