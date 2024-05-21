@@ -33,4 +33,11 @@ export class FrameworkService {
     localStorage.setItem(this.storageKey, JSON.stringify(courses));
   }
 
+
+  //räkna ut antal totala poäng
+  getTotalPoints(): number {
+    const savedCourses = this.getCourses();
+    return savedCourses.reduce((total, course) => total + course.points.valueOf(), 0);
+  }
+  
 }

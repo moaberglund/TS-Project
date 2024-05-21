@@ -38,6 +38,7 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadSavedCourses();
+    this.calculateTotalPoints();
   }
 
   ngAfterViewInit() {
@@ -49,7 +50,7 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
     const courses = this.frameworkService.getCourses();
     this.savedCourses.data = courses;
   }
-  
+
   // funktion för snackbar (bar som ploppar upp längst ner)
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
@@ -61,6 +62,14 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
     this.frameworkService.removeCourse(course);
     this.loadSavedCourses(); // Uppdatera listan efter borttagning
     this.openSnackBar('Kursen har tagits bort', 'Stäng');
+    this.calculateTotalPoints(); //uppdatera uträkning av tot poäng
+  }
+
+  //Räkna ut antal poäng man har i sitt ramschema
+  totalPoints: number = 0;
+
+  calculateTotalPoints(): void {
+    this.totalPoints = this.frameworkService.getTotalPoints();
   }
 
 }
