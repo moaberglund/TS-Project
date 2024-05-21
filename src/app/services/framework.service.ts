@@ -24,4 +24,13 @@ export class FrameworkService {
   }
 
 
+  //ta bort en kurs från localstorage
+  removeCourse(course: CourseItem): void {
+    let courses = this.getCourses(); 
+    // Filtrera bort kursen som ska tas bort
+    courses = courses.filter(c => c.courseCode !== course.courseCode);
+    // Spara den uppdaterade listan tillbaka till localStorage
+    localStorage.setItem(this.storageKey, JSON.stringify(courses));
+  }
+
 }

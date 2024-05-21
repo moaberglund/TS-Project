@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { FrameworkService } from '../services/framework.service';
+
 @Component({
   selector: 'app-course-table',
   templateUrl: './course-table.component.html',
@@ -36,7 +38,7 @@ export class CourseTableComponent implements AfterViewInit {
   selectedSubject: string = ''; // Lägg till selectedSubject
   filterValue: string = ''; // Lägg till filterValue
 
-  constructor(private allCoursesService: AllCoursesService) { } // Inject AllCoursesService
+  constructor(private allCoursesService: AllCoursesService, private frameworkService: FrameworkService) { } // Inject AllCoursesService
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -44,6 +46,7 @@ export class CourseTableComponent implements AfterViewInit {
     this.loadData(); // Load data after view initialization
   }
 
+  //Hämtar data från API:et
   private loadData(): void {
     this.allCoursesService.getCourses().subscribe(
       (data: CourseItem[]) => {
@@ -59,12 +62,13 @@ export class CourseTableComponent implements AfterViewInit {
 
   }
 
-  //sökning
+  //Använder filtreringsvärdet från sökfältet
   applyFilter(event: Event) {
     this.filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.updateFilter();
   }
 
+  //Använder filtreringsvärdet från ämnesväljaren
   applySubjectFilter() {
     this.updateFilter();
   }
@@ -76,6 +80,7 @@ export class CourseTableComponent implements AfterViewInit {
     return Array.from(subjectsSet);
   }
 
+  //Uppdaterar filtreringen baserat på sökord och valt ämne
   updateFilter() {
     this.dataSource.filterPredicate = (data: CourseItem, filter: string) => {
       const searchTerm = this.filterValue.toLowerCase();
@@ -93,10 +98,16 @@ export class CourseTableComponent implements AfterViewInit {
     this.dataSource.filter = this.filterValue + this.selectedSubject; // Trigga omvärdering av filter
   }
 
-
+//Lägga till kurs till localstorage
   onAdd(row: CourseItem) {
-  
-    // Implementera localstorage
+    this.frameworkService.addCourse(row);
+    console.log('Course added to local storage:', row);
+
+  }
+//Ta bort kurs från 
+  onRemove(row: CourseItem) {
+    this.frameworkService.removeCourse(row);
+    console.log('Course removed from local storage:', row);
   }
 
 
