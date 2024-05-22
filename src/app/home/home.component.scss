@@ -33,11 +33,11 @@ body {
 .home-img {
     @extend .home-text;
     display: flex;
-
     img {
-        margin: 1em;
+        margin: 1em auto;
         width: 30%;
-
+        max-width: 500px;
+        display: block;
     }
 }
 
