@@ -1,5 +1,8 @@
 $transparent-bg: rgb(63, 103, 133, 0.8);
 $shy-indigo: rgb(63, 103, 133);
+$darkblue: #152938;
+$lightblue: #D4E7EA;
+
 
 header {
     position: fixed;
@@ -38,7 +41,7 @@ header {
         }
 
         .active {
-            background-color: rgb(233, 233, 233);
+            background-color: $lightblue;
             text-shadow: 4px 4px 6px rgba(243, 243, 243, 0.5);
             color: $shy-indigo;
             padding: 1.3em 0.5em 1em 0.5em;
