@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Semi+Expanded:wght@100;200;300;400;500;600;700;800;900&display=swap');
-$h1-font:"Encode Sans Semi Expanded", sans-serif;;
+$h1-font: "Encode Sans Semi Expanded", sans-serif;
+
 
 body {
     background: url("../../assets/media/university-library.jpg");
-    height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -11,20 +11,71 @@ body {
 
 .hero-logo {
     margin-top: 70px;
+    padding: 2em 0;
+    text-align: center;
+
 
     h1 {
         font-family: $h1-font ;
+        color: #FFFFFF;
         text-transform: uppercase;
-        font-size: 2.5em;
-        letter-spacing: 2px;
-        padding: 0.5em;
-        text-align: center;
+        font-size: 3.5em;
+        letter-spacing: 5px;
+        padding-top: 0.5em;
     }
 
-    
+    h2 {
+        color: #D4E7EA;
+        font-weight: 300
+    }
+}
+
+.home-img {
+    @extend .home-text;
+    display: flex;
+
+    img {
+        margin: 1em;
+        width: 30%;
+
+    }
 }
 
 .home-text {
     z-index: 10;
-    background-color: rgb(0, 0, 0, 0.6);
+    background-color: rgba(252, 252, 252, 0.8);
+    padding: 1em;
+    text-align: center;
+    margin-bottom: 4em;
+    line-height: 1.6em;
+
+    .wrapper {
+        max-width: 1000px;
+    }
+
+
+    h1 {
+        font-weight: 400;
+        font-size: 2.2em;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+}
+
+a {
+    border: 1px solid #308DCA;
+    border-radius: 25px;
+    padding: 0.7em;
+    font-size: 1.2em;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 150px;
+
+    &:hover {
+        background-color: #308DCA;
+        color: #FFFFFF;
+    }
+
 }
