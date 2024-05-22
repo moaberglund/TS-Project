@@ -5,10 +5,11 @@ header {
     position: fixed;
     top: 0;
     left: 0;
+    height: 5vh;
     width: 100%;
     padding: 1em;
     background-color: $transparent-bg;
-  
+
 
     nav {
         margin: 0.2em 0 0.2em 0;
@@ -37,10 +38,10 @@ header {
         }
 
         .active {
-            background-color: white;
-            text-shadow: 4px 4px 6px rgba(228, 228, 228, 0.5);
+            background-color: rgb(233, 233, 233);
+            text-shadow: 4px 4px 6px rgba(243, 243, 243, 0.5);
             color: $shy-indigo;
-            padding: 2em 0.5em 2em 0.5em;
+            padding: 1.3em 0.5em 1em 0.5em;
         }
 
     }
