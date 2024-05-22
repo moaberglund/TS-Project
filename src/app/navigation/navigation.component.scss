@@ -2,16 +2,23 @@ $transparent-bg: rgb(63, 103, 133, 0.8);
 $shy-indigo: rgb(63, 103, 133);
 $darkblue: #152938;
 $lightblue: #D4E7EA;
+$azul: #55BDE5;
+$azulito: #55BBBB;
 
 
 header {
     position: fixed;
     top: 0;
     left: 0;
-    height: 5vh;
+    height: 3em;
     width: 100%;
     padding: 1em;
-    background-color: $transparent-bg;
+    background-color: $lightblue;
+    display: flex;
+
+    img {
+        height: 100%;
+    }
 
 
     nav {
@@ -28,7 +35,7 @@ header {
         }
 
         a {
-            color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
             font-weight: 400;
             font-size: 20px;
             text-transform: uppercase;
@@ -41,10 +48,9 @@ header {
         }
 
         .active {
-            background-color: $lightblue;
-            text-shadow: 4px 4px 6px rgba(243, 243, 243, 0.5);
-            color: $shy-indigo;
-            padding: 1.3em 0.5em 1em 0.5em;
+            background-color: $transparent-bg;
+            color: $lightblue;
+            padding: 1.5em 0.5em 0.9em 0.5em;
         }
 
     }
