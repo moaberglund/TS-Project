@@ -1,4 +1,4 @@
-
+$grey: #cecece;
 
 body {
     margin-top: 80px;
@@ -7,4 +7,10 @@ body {
   .course-table {
     width: 80%;
     margin: 0 auto;
+  }
+
+  #sum {
+    padding: 1em;
+    border-top: 1px solid $grey;
+    border-bottom: 1px solid $grey;
   }

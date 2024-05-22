@@ -46,7 +46,8 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <div>Totalt antal poäng för sparade kurser: {{ totalPoints }}</div>
+
+    <div id="sum">Totalt antal poäng för sparade kurser: {{ totalPoints }}</div>
 
     <mat-paginator [length]="savedCourses.data.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
       aria-label="Select page">
