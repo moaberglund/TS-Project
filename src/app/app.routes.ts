@@ -5,10 +5,10 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { CoursesComponent } from './courses/courses.component';
 
 export const routes: Routes = [
-    {path: "home", component: HomeComponent },
-    {path: "courses", component: CoursesComponent},
-    {path: "framework", component: FrameworkComponent},
+    {path: "home", component: HomeComponent, title: "Skanderna Universitet"},
+    {path: "courses", component: CoursesComponent, title: "Kurser"},
+    {path: "framework", component: FrameworkComponent, title: "Mitt Ramschema"},
     {path: "", redirectTo: "/home", pathMatch: "full"},
-    {path: "404", component: NotFoundComponent},
+    {path: "404", component: NotFoundComponent, title: "404- error"},
     {path:"**", component: NotFoundComponent} //plockar upp allt annat och re-route till 404-sidan
 ];
