@@ -9,6 +9,6 @@ export const routes: Routes = [
     {path: "courses", component: CoursesComponent, title: "Kurser"},
     {path: "framework", component: FrameworkComponent, title: "Mitt Ramschema"},
     {path: "", redirectTo: "/home", pathMatch: "full"},
-    {path: "404", component: NotFoundComponent, title: "404- error"},
+    {path: "404", component: NotFoundComponent, title: "404 - error"},
     {path:"**", component: NotFoundComponent} //plockar upp allt annat och re-route till 404-sidan
 ];
