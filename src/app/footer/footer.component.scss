@@ -42,6 +42,9 @@ footer {
 
     footer {
         display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
         div {
             display: none;
@@ -50,7 +53,6 @@ footer {
         img {
             width: 90%;
             margin: 0 auto;
-            align-items: center;
         }
     }
     
