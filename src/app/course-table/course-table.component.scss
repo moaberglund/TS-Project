@@ -29,3 +29,50 @@ body {
     align-items: center;
   }
 }
+
+
+//Dölj vissa columner vid mindre skärm
+@media screen and (min-width: 701px) and (max-width:900px) {
+  .course-table {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .mat-column-subject {
+    display: none;
+  }
+}
+
+@media screen and (min-width:601px) and (max-width:700px) {
+  .course-table {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .mat-column-subject {
+    display: none;
+  }
+
+  .mat-column-courseCode {
+    display: none;
+  }
+}
+
+@media screen and (min-width:300px) and (max-width:600px) {
+  .course-table {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .mat-column-subject {
+    display: none;
+  }
+
+  .mat-column-courseCode {
+    display: none;
+  }
+
+  .mat-column-points {
+    display: none;
+  }
+}

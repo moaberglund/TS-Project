@@ -16,7 +16,7 @@ body {
 }
 
 //Dölj vissa columner vid mindre skärm
-@media screen and (min-width: 701px) and (max-width:800px) {
+@media screen and (min-width: 701px) and (max-width:900px) {
   .course-table {
     width: 95%;
     margin: 0 auto;
