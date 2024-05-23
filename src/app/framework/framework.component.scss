@@ -1,16 +1,62 @@
 $grey: #cecece;
 
 body {
-    margin-top: 80px;
-  }
-  
+  margin-top: 80px;
+}
+
+.course-table {
+  width: 80%;
+  margin: 0 auto;
+}
+
+#sum {
+  padding: 1em;
+  border-top: 1px solid $grey;
+  border-bottom: 1px solid $grey;
+}
+
+//Dölj vissa columner vid mindre skärm
+@media screen and (min-width: 701px) and (max-width:800px) {
   .course-table {
-    width: 80%;
+    width: 95%;
     margin: 0 auto;
   }
 
-  #sum {
-    padding: 1em;
-    border-top: 1px solid $grey;
-    border-bottom: 1px solid $grey;
+  .mat-column-subject {
+    display: none;
   }
+}
+
+@media screen and (min-width:601px) and (max-width:700px) {
+  .course-table {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .mat-column-subject {
+    display: none;
+  }
+
+  .mat-column-courseCode {
+    display: none;
+  }
+}
+
+@media screen and (min-width:300px) and (max-width:600px) {
+  .course-table {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .mat-column-subject {
+    display: none;
+  }
+
+  .mat-column-courseCode {
+    display: none;
+  }
+
+  .mat-column-points {
+    display: none;
+  }
+}
