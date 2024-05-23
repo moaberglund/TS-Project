@@ -1,7 +1,7 @@
 <header>
     <a routerLink="/home">
         <img src="../../assets/media/HatLogosmaller.svg" alt="Logga"></a>
-    <nav>
+    <nav class="desktop-nav">
         <ul>
             <li><a routerLink="/home" routerLinkActive="active">Startsida</a></li>
             <li><a routerLink="/courses" routerLinkActive="active">Kurser</a></li>
@@ -9,4 +9,19 @@
 
         </ul>
     </nav>
+
+    <!-- Mobile nav button -->
+    <div class="mobile-nav">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before" class="custom-style">
+            <ul>
+                <li><a routerLink="/home">Startsida</a></li>
+                <li><a routerLink="/courses">Kurser</a></li>
+                <li><a routerLink="/framework">Ramschema</a></li>
+            </ul>
+        </mat-menu>
+    </div>
+
 </header>
