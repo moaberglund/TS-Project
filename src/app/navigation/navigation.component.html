@@ -16,11 +16,11 @@
             <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="before" class="custom-style">
-            <ul>
-                <li><a routerLink="/home">Startsida</a></li>
-                <li><a routerLink="/courses">Kurser</a></li>
-                <li><a routerLink="/framework">Ramschema</a></li>
-            </ul>
+
+            <button mat-menu-item routerLink="/home">Startsida</button>
+            <button mat-menu-item routerLink="/courses">Kurser</button>
+            <button mat-menu-item routerLink="/framework">Ramschema</button>
+
         </mat-menu>
     </div>
 

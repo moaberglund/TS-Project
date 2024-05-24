@@ -82,6 +82,19 @@ header {
 
     .custom-style {
         background: red;
+        ul {
+            background-color: blue;
+            width: 50vw;
+
+        }
+        li {
+            color: yellow;
+            width: 50vw;
+        }
+        a {
+            width: 50vw;
+            color: green;
+        }
     }
     
 
