@@ -51,16 +51,3 @@ En snackbar ger även användaren en notifikation när en kurs lägges till elle
 Bilder på webbplatsen har hämtats från Pixabay som är en sida som tillhandahåller fri stockmedia.
 Ikon är hämtad från Canvas gratis bibliotek.
 
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
