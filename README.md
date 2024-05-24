@@ -44,7 +44,9 @@ Båda sidor använder sig även av paginering samt räknar antalet resultat av d
 
 En snackbar ger även användaren en notifikation när en kurs lägges till eller tas bort.
 
-
+## Media
+Bilder på webbplatsen har hämtats från Pixabay som är en sida som tillhandahåller fri stockmedia.
+Ikon är hämtad från Canvas gratis bibliotek.
 
 
 ## Development server
