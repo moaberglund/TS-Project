@@ -14,10 +14,12 @@ Den består av tre undersidor:
 * Ramschema
 
 ## Struktur
+
+### Komponenter
 Applikationen har komponenter för varje undersida, samt en för navigation, en för footern, en för route not found och en speciel komponent för hanteringen av kursdatan som innehåller en datasource fil.
 
-
-Det skapades även ett `interface` för hantering av datan i API:et med följande struktur:
+### Interface
+Det skapades även ett interface för hantering av datan i API:et med följande struktur:
 ```
 export interface CourseItem {
     courseCode: String,
@@ -32,7 +34,7 @@ export interface CourseItem {
   
 }
 ```
-
+### Servicefiler
 Det finns en servicefil med observable HttpClient för hantering av kurser.
 En servicefil för hantering av localstorage som används för lagring av användarens personliga ramschema.
 
