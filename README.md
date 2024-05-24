@@ -15,7 +15,7 @@ Den består av tre undersidor:
 
 ## Struktur
 Applikationen har komponenter för varje undersida, samt en för navigation, en för footern, en för route not found och en speciel komponent för hanteringen av kursdatan som innehåller en datasource fil.
-Det skapades även ett interface för hantering av datan i API:et med följande struktur:
+Det skapades även ett `interface` för hantering av datan i API:et med följande struktur:
 ```
 export interface CourseItem {
     courseCode: String,
