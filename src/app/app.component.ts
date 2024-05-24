@@ -10,5 +10,5 @@ import { NavigationComponent } from './navigation/navigation.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'mobe-TS-Project';
+  title = 'Skanderna Universitet';
 }
