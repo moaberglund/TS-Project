@@ -3,10 +3,9 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.5.
 
 ## Projektet
---
+
 Detta är en Angular applikation som hämtar data från ett API som innehåller universitetskurser i JSON format. 
 Webbplatsen syboliserar ett fiktivt lärosäte där studenter kan söka bland kurser och skapa ett ramschema.
----
 
 Applikationen använder sig av TypeScript, SCSS och HTML för uppbyggnad och har till stor del tagit hjälp av Angular Material. 
 Den består av tre undersidor:
