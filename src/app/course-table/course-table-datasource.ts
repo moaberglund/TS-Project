@@ -8,71 +8,81 @@ import { AllCoursesService } from '../services/all-courses.service';
 
 
 /**
- * Data source for the CourseTable view. This class should
- * encapsulate all logic for fetching and manipulating the displayed data
- * (including sorting, pagination, and filtering).
+ * Datasource för CourseTable-vyn. Denna klass ska 
+ * kapsla in all logik för hämtning och hantering av data som visas
+ * (inklusive sortering, paginering och filtrering).
  */
 export class CourseTableDataSource extends DataSource<CourseItem> {
+  // Array för att hålla datan
   data: CourseItem[] = [];
+  // Paginator och sort, dessa tilldelas utanför klassen
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
+  // Flagga för att indikera om data laddas
   isLoading: boolean = false;
 
-  constructor(private allCoursesService: AllCoursesService) {  // Inject the service
+   // Konstruktor som injicerar en tjänst för att hämta all kursdata
+  constructor(private allCoursesService: AllCoursesService) {
     super();
   }
 
-  /**
-   * Connect this data source to the table. The table will only update when
-   * the returned stream emits new items.
-   * @returns A stream of the items to be rendered.
+/**
+   * Anslut denna datasource till tabellen. Tabellen uppdateras endast när
+   * den returnerade strömmen emitterar nya objekt.
+   * @returns En ström av objekt som ska renderas.
    */
   connect(): Observable<CourseItem[]> {
     if (this.paginator && this.sort) {
-      // Combine everything that affects the rendered data into one update
-      // stream for the data-table to consume.
+      // Kombinera allt som påverkar den renderade datan till en uppdateringsström
+      // för datatabellen att konsumera.
       return merge(this.paginator.page, this.sort.sortChange)
         .pipe(map(() => {
+          // Paginera och sortera datan när en händelse inträffar
           return this.getPagedData(this.getSortedData([...this.data]));
         }),
-        catchError(() => observableOf([])), // Handle errors
-        finalize(() => this.isLoading = false) // Finalize request
+        catchError(() => observableOf([])), // Hanterar fel
+        finalize(() => this.isLoading = false) // Slutför förfrågan
       );
     } else {
+      // Kasta ett fel om paginator eller sort inte är satt
       throw Error('Please set the paginator and sort on the data source before connecting.');
     }
   }
 
   /**
-   *  Called when the table is being destroyed. Use this function, to clean up
-   * any open connections or free any held resources that were set up during connect.
+   * Kallas när tabellen förstörs. Använd denna funktion för att städa upp
+   * eventuella öppna anslutningar eller frigöra resurser som användes under connect.
    */
   disconnect(): void { }
 
-  /**
-   * Paginate the data (client-side). If you're using server-side pagination,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
+  
+   // Paginerar datan
+  
   private getPagedData(data: CourseItem[]): CourseItem[] {
     if (this.paginator) {
+       // Beräkna startindex baserat på aktuell sidindex och sidstorlek
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+       // Returnera en del av arrayen baserat på paginering
       return data.splice(startIndex, startIndex + this.paginator.pageSize);
     } else {
+      // Returnera data om paginator inte är satt
       return data;
     }
   }
 
-  /**
-   * Sort the data (client-side). If you're using server-side sorting,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
+  
+  // Sorterar datan
+  
   private getSortedData(data: CourseItem[]): CourseItem[] {
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
+      // Returnera data osorterad om sort inte är satt
       return data;
     }
 
     return data.sort((a, b) => {
+      // Kontrollera om sorteringsriktningen är stigande
       const isAsc = this.sort?.direction === 'asc';
+      // Sortera baserat på den aktiva sorteringskolumnen
       switch (this.sort?.active) {
         case 'code': return compare(+a.courseCode, +b.courseCode, isAsc);
         case 'name': return compare(+a.courseName, +b.courseName, isAsc);
@@ -87,11 +97,11 @@ export class CourseTableDataSource extends DataSource<CourseItem> {
 }
 
 
-
-
-
-
-/** Simple sort comparator for example ID/Name columns (for client-side sorting). */
+// Enkel sorteringsfunktion för kolumner
+// a Första värdet att jämföra
+// b Andra värdet att jämföra
+// isAsc Om sorteringen är stigande
+// returnerar jämförelseresultatet
 function compare(a: string | number, b: string | number, isAsc: boolean): number {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
