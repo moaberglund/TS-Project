@@ -5,8 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Projektet
 
 Detta är en Angular applikation som hämtar data från ett API som innehåller universitetskurser i JSON format. 
-Webbplatsen syboliserar ett fiktivt lärosäte där studenter kan söka bland kurser och skapa ett ett ramschema.
----
+Webbplatsen syboliserar ett fiktivt lärosäte där studenter kan söka bland kurser och skapa ett ramschema.
 
 Applikationen använder sig av TypeScript, SCSS och HTML för uppbyggnad och har till stor del tagit hjälp av Angular Material. 
 Den består av tre undersidor:
@@ -15,7 +14,11 @@ Den består av tre undersidor:
 * Ramschema
 
 ## Struktur
+
+### Komponenter
 Applikationen har komponenter för varje undersida, samt en för navigation, en för footern, en för route not found och en speciel komponent för hanteringen av kursdatan som innehåller en datasource fil.
+
+### Interface
 Det skapades även ett interface för hantering av datan i API:et med följande struktur:
 ```
 export interface CourseItem {
@@ -31,7 +34,7 @@ export interface CourseItem {
   
 }
 ```
-
+### Servicefiler
 Det finns en servicefil med observable HttpClient för hantering av kurser.
 En servicefil för hantering av localstorage som används för lagring av användarens personliga ramschema.
 
@@ -47,17 +50,4 @@ En snackbar ger även användaren en notifikation när en kurs lägges till elle
 ## Media
 Bilder på webbplatsen har hämtats från Pixabay som är en sida som tillhandahåller fri stockmedia.
 Ikon är hämtad från Canvas gratis bibliotek.
-
-
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
