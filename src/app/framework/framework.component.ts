@@ -24,12 +24,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './framework.component.scss'
 })
 export class FrameworkComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "syllabus", "remove"];
+  displayedColumns: string[] = ["courseCode", "courseName", "points", "subject", "syllabus", "remove"];  // Kolumner som visas i tabellen
 
-  savedCourses = new MatTableDataSource<CourseItem>(); // Lägg till ? för att markera att den kan vara undefined
+  savedCourses = new MatTableDataSource<CourseItem>(); // Skapar en ny MatTableDataSource för att hantera kursdata
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;  // Referens till MatPaginator i vyn
+  @ViewChild(MatSort) sort!: MatSort;  // Referens till MatSort
 
   constructor(
     private frameworkService: FrameworkService,
@@ -37,18 +37,19 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadSavedCourses();
-    this.calculateTotalPoints();
+    this.loadSavedCourses();  // Laddar sparade kurser vid initiering
+    this.calculateTotalPoints();  // Beräknar totala poäng vid initiering
   }
 
   ngAfterViewInit() {
-    this.savedCourses.paginator = this.paginator;
-    this.savedCourses.sort = this.sort;
+    this.savedCourses.paginator = this.paginator;  // Sätter paginator för tabellen
+    this.savedCourses.sort = this.sort;   // Sätter sortering för tabellen
   }
 
+  // Laddar sparade kurser från tjänsten
   loadSavedCourses(): void {
     const courses = this.frameworkService.getCourses();
-    this.savedCourses.data = courses;
+    this.savedCourses.data = courses;   // Sätter data för tabellen
   }
 
   // funktion för snackbar (bar som ploppar upp längst ner)
@@ -58,18 +59,20 @@ export class FrameworkComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // Tar bort en kurs och uppdaterar tabellen
   onRemove(course: CourseItem): void {
-    this.frameworkService.removeCourse(course);
+    this.frameworkService.removeCourse(course); // Tar bort kursen från tjänsten
     this.loadSavedCourses(); // Uppdatera listan efter borttagning
-    this.openSnackBar('Kursen har tagits bort', 'Stäng');
+    this.openSnackBar('Kursen har tagits bort', 'Stäng');  // Visar bekräftelse - snackbar pop-up
     this.calculateTotalPoints(); //uppdatera uträkning av tot poäng
   }
 
   //Räkna ut antal poäng man har i sitt ramschema
-  totalPoints: number = 0;
+
+  totalPoints: number = 0;  // Variabel för att hålla totala poäng
 
   calculateTotalPoints(): void {
-    this.totalPoints = this.frameworkService.getTotalPoints();
+    this.totalPoints = this.frameworkService.getTotalPoints();  // Hämtar totala poäng från tjänsten
   }
 
 }
