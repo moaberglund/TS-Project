@@ -89,6 +89,7 @@ a {
 .numbers {
     display: flex;
     justify-content: center;
+
     h3 {
         color: #12253B;
         font-weight: 400;
@@ -99,9 +100,11 @@ a {
 }
 
 @media screen and (max-width: 600px) {
-    
+
 
     .hero-logo {
+        min-height: 400px;
+
         h2 {
             background-color: rgb(255, 255, 255, 0.5);
             color: #12253B;
