@@ -27,60 +27,64 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatIconModule]
 })
 export class CourseTableComponent implements AfterViewInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<CourseItem>;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;  //hämtar paginator från vyn
+  @ViewChild(MatSort) sort!: MatSort;   //hämtar sorteringsfunktionen
+  @ViewChild(MatTable) table!: MatTable<CourseItem>;  // hämtar tabellen
 
-  dataSource: MatTableDataSource<CourseItem> = new MatTableDataSource<CourseItem>;  // Declare dataSource without initialization
+  dataSource: MatTableDataSource<CourseItem> = new MatTableDataSource<CourseItem>;  // Deklarerar dataSource utan initiering
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+  // Kolumner som visas i tabellen
   displayedColumns = ["courseCode", "courseName", "points", "subject", "syllabus", "add"];
-  subjects: string[] = []; // Lista över ämnen
-  selectedSubject: string = ''; // Lägg till selectedSubject
-  filterValue: string = ''; // Lägg till filterValue
 
+  subjects: string[] = []; // Lista över ämnen
+  selectedSubject: string = ''; // valt ämne
+  filterValue: string = ''; // Värde för sökfilter
+
+  //konstruktorn initierar tjänsterna
   constructor(private allCoursesService: AllCoursesService,
     private frameworkService: FrameworkService,
-    private snackBar: MatSnackBar) { } // Inject AllCoursesService
+    private snackBar: MatSnackBar) { }
 
+  //efter att vyn har initierats
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.loadData(); // Load data after view initialization
+    this.dataSource.paginator = this.paginator;  //sätter paginator för datasource
+    this.dataSource.sort = this.sort;   //sätter sorteringsfunktion för datasource
+    this.loadData(); // Laddar data efter initiering av vyn
   }
 
   //Hämtar data från API:et
   private loadData(): void {
     this.allCoursesService.getCourses().subscribe(
       (data: CourseItem[]) => {
-        this.dataSource.data = data;
+        this.dataSource.data = data;   //sätter data till datasourse
         this.subjects = this.getUniqueSubjects(data); // Hämta unika ämnen
         if (this.paginator) {
-          this.paginator.length = data.length;
+          this.paginator.length = data.length;  //sätter total längd för paginering
         }
       },
       error => {
-        console.error("Error fetching data from API", error);
+        console.error("Error fetching data from API", error);  //hanterar fel vid hämtning av data
       });
 
   }
 
   //Använder filtreringsvärdet från sökfältet
   applyFilter(event: Event) {
-    this.filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    this.updateFilter();
+    this.filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();  //sätter filtervärde
+    this.updateFilter();  //uppdaterar filter
   }
 
   //Använder filtreringsvärdet från ämnesväljaren
   applySubjectFilter() {
-    this.updateFilter();
+    this.updateFilter();  //uppdaterar filter
   }
 
   //välja ett ämne
+  //Hämtar unika ämnen från datan
   private getUniqueSubjects(data: CourseItem[]): string[] {
     const subjectsSet = new Set<string>();
-    data.forEach(course => subjectsSet.add(course.subject.toString()));
-    return Array.from(subjectsSet);
+    data.forEach(course => subjectsSet.add(course.subject.toString()));  // Lägg till ämnen i set
+    return Array.from(subjectsSet);  // Konverterar set till array
   }
 
   //Uppdaterar filtreringen baserat på sökord och valt ämne
@@ -89,11 +93,14 @@ export class CourseTableComponent implements AfterViewInit {
       const searchTerm = this.filterValue.toLowerCase();
       const subjectTerm = this.selectedSubject.toLowerCase();
 
+
+      // Kontrollera om data matchar sökordet
       const matchesFilter = data.courseName.toLowerCase().includes(searchTerm) ||
         data.courseCode.toLowerCase().includes(searchTerm) ||
         data.subject.toLowerCase().includes(searchTerm) ||
         data.points.toString().includes(searchTerm);
 
+      // Kontrollera om data matchar valt ämne
       const matchesSubject = !subjectTerm || data.subject.toLowerCase() === subjectTerm;
 
       return matchesFilter && matchesSubject;
@@ -111,17 +118,13 @@ export class CourseTableComponent implements AfterViewInit {
 
   //Lägga till kurs till localstorage
   onAdd(row: CourseItem) {
-    this.frameworkService.addCourse(row);
-    this.openSnackBar('Kursen har lagts till', 'Stäng');
-    console.log('Course added to local storage:', row);
-
+    this.frameworkService.addCourse(row); // Lägg till kurs i local storage
+    this.openSnackBar('Kursen har lagts till', 'Stäng'); // Visa bekräftelse
   }
-  //Ta bort kurs från 
+
+  //Ta bort kurs från localstorage
   onRemove(row: CourseItem) {
     this.frameworkService.removeCourse(row);
     this.openSnackBar('Kursen har tagits bort', 'Stäng');
-    console.log('Course removed from local storage:', row);
   }
-
-
 }
